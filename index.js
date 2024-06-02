@@ -14,62 +14,39 @@ const player2 = new Player()
 // it then checks logic to see if it works.
 
 }
-
+// when box is pressed, 1. show O/X 
+// 2. log as first players value. Moves then alternates between X and O
+// player object is created to store the row and col
+// use each of the object to update gameBoard (prototype) -- if gameboard already has logged value, dont allow user to replace
+// check logic
+// display win 
 const Player = function (row, col) {
     this.row = row;
     this.col = col;
 }
 
-
 // logic should comprise of 3 diff variants : 
 // horizontal, vertical, diagonal
 function logic (board, rowPlaced, colPlaced, playerMove) {
     
-    const boardHorizontal = board[rowPlaced];
     // horizontal checks - check only that row placed
     // if whole row same = win.
-    for (const horValue of boardHorizontal) {
-        if (horValue !== playerMove) {
-            return 1;
-        }
-    }
+    const boardHorizontal = board[rowPlaced];
+    const horCheck = boardHorizontal.every(rowMove => rowMove === playerMove)
 
     // vertical checks - check only that vert placed
     // loop row, freeze colplaced
-    for (let row = 0; row < 3; row++ ) {
-        const boardVert = board[row][colPlaced];
-        if (playerMove !== boardVert) {
-            return 1;
-        }
-    }
+    const vertCheck = board.every(vertMove => board[vertMove][colPlaced] === playerMove)
 
     // diagonal checks - check only the diagonal placed
+    const diagonals = [[board[0][0], board[1][1], board[2][2]], 
+                      [board[0][2], board[1][1], board[2][0]]]
 
-    // remove non diagonals
-    if (((rowPlaced == 0 || rowPlaced == 2) && colPlaced == 1) ||
-        (rowPlaced == 1 && (colPlaced == 0 || colPlaced == 2))) {
-            return 1;
-        }
+    // return true if either diagonal has matches
+    // checks if every placed moved on board is same as player's move.
+    const diagonalCheck = diagonals.some(diagonal => 
+                            diagonal.every(boardMove => boardMove === playerMove)
+                        )
 
-    // check right diagonals
-    for (let row = 0; row < 3; row++) {  
-
-        const boardPlaced = board[row][row];
-        if (playerMove !== boardPlaced) {
-            return 1;
-        } 
-    }
-    
-    // check left diagonals
-    let col = 2;
-    for (let row = 0; row < 3; row++) {
-
-        const boardPlaced = board[row][col];
-        if (playerMove !== boardPlaced) {
-            return 1;
-        }
-        col--;
-    }
-
-    return 0;
+    return (horCheck || vertCheck || diagonalCheck) ? 0 : 1;
 }
