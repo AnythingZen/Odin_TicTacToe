@@ -1,7 +1,7 @@
 function gameBoard () {
-    let board = [[], 
-                 [], 
-                 []
+    let board = [[' ', ' ', ' '], 
+                 [' ', ' ', ' '], 
+                 [' ', ' ', ' ']
                 ]
     return board;
 }   
@@ -40,12 +40,15 @@ function tictactoe () {
                     let flag = true;
                     for (let row of board) {
                         for (let cell of row) {
-                            if (cell === undefined) {
+                            if (cell === ' ') {
                                 flag = false;
+                                break;
                             }
+                        }
+                        if (!flag) {
                             break;
                         }
-                        if (!flag) break;
+
                     }
                     if (flag) {
                         alert('Tie!');
