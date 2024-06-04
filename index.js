@@ -39,11 +39,8 @@ function tictactoe () {
                     currentPlayer = (currentPlayer === player1) ? player2 : player1;
                     let flag = true;
                     for (let row of board) {
-                        console.log(row)
                         for (let cell of row) {
-                            console.log('cell: '+ cell)
                             if (cell === undefined) {
-                                console.log(cell)
                                 flag = false;
                             }
                             break;
