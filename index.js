@@ -37,29 +37,17 @@ function tictactoe () {
                 }
                 else {
                     currentPlayer = (currentPlayer === player1) ? player2 : player1;
-                    let flag = true;
-                    for (let row of board) {
-                        for (let cell of row) {
-                            if (cell === ' ') {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (!flag) {
-                            break;
-                        }
+                    const tieCheck = board.every(row => 
+                                        row.every(cell => cell !== ' '));
 
-                    }
-                    if (flag) {
+                    if (tieCheck) {
                         alert('Tie!');
                     }
                 }
             }
-
         })
     }
     moveDisplay();
-
 }
 
 const Player = function (name, symbol) {
@@ -74,24 +62,12 @@ function logic (board, rowPlaced, colPlaced, playerMove) {
     // horizontal checks - check only that row placed
     // if whole row same = win.
     const boardHorizontal = board[rowPlaced];
-    let horCheck = true;
-    for (let i = 0; i < 3; i++) {
-        if (boardHorizontal[i] !== playerMove) {
-            horCheck = false; 
-            break;
-        }
-    }
+    const horCheck = boardHorizontal.every(horMove => horMove === playerMove);
 
     // vertical checks - check only that vert placed
     // loop row, freeze colplaced
-    let vertCheck = true;
-    for (let i = 0; i < 3; i++) {
-        if (board[i][colPlaced] !== playerMove) { 
-            vertCheck = false; 
-            break;
-        }
-    }
-    
+    const vertCheck = board.every(row => row[colPlaced] === playerMove);
+
     // diagonal checks - check only the diagonal placed
     const diagonals = [[board[0][0], board[1][1], board[2][2]], 
                       [board[0][2], board[1][1], board[2][0]]]
